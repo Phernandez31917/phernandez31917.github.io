@@ -1,33 +1,47 @@
-// Will alert test to verify JS linkage
-function makeTextBigger() {
-    // This will access the textarea and set its font size to 24pt
+// Function to increase the font size of the within the textField text box
+function makeBigger() {
+    // Select the text area and change its font size
+    document.getElementById("userText").style.fontSize = "24pt";
+  }
+  
+  // Function to apply styles based on the selected radio button
+  function applyStyle() {
     const textArea = document.getElementById("userText");
-    textArea.style.fontSize = "24pt";
-}
-
-// This will apply styles based on the selected radio button
-function applyStyle() {
-    const textArea = document.getElementById("userText");
-    const fancyRadio = document.getElementById("fancyShmancy");
-
-    if (fancyRadio.checked) {
-        textArea.style.fontWeight = "bold";
-        textArea.style.color = "blue";
-        textArea.style.textDecoration = "underline";
-    } else {
-        textArea.style.fontWeight = "normal";
-        textArea.style.color = "black";
-        textArea.style.textDecoration = "none";
+    
+    // Will check to see if FancyShmancy radio button is selected
+    if (document.getElementById("fancyShmancy").checked) {
+      textArea.style.fontWeight = "bold";  // Make text bold
+      textArea.style.color = "blue";       // Change text color to blue
+      textArea.style.textDecoration = "underline";  // Underline the text
+    } 
+    // Will check to see if BoringBetty radio button is selected
+    else if (document.getElementById("boringBetty").checked) {
+      textArea.style.fontWeight = "normal";  // Reset font weight
+      textArea.style.color = "black";       // Reset text color
+      textArea.style.textDecoration = "none"; // Remove underline
     }
-}
-
-// Will convert text to uppercase and add "-Moo" to each sentence
-function mooifyText() {
+  }
+  
+  // This function will uppercase the text and add "-Moo" to the last word of each sentence
+  function mooIt() {
     const textArea = document.getElementById("userText");
-    let text = textArea.value.toUpperCase();
-    const sentences = text.split(".");
-    for (let i = 0; i < sentences.length - 1; i++) {
-        sentences[i] = sentences[i].trim() + "-Moo";
-    }
-    textArea.value = sentences.join(". ");
-}
+    let text = textArea.value;
+  
+    // Convert text to uppercase
+    text = text.toUpperCase();
+  
+    // Add "-Moo" to the last word of each sentence
+    let sentences = text.split('.'); // Split text into sentences
+    sentences = sentences.map(sentence => {
+      // Remove leading/trailing spaces and add '-Moo' to the last word
+      let words = sentence.trim().split(' ');
+      if (words.length > 0) {
+        words[words.length - 1] += "-Moo"; // Add "-Moo" to the last word
+      }
+      return words.join(' '); // Join the sentence back together
+    });
+  
+    // concatenates both of the sentences back with join and update the textarea
+    textArea.value = sentences.join('. ') + (text.length ? '.' : ''); // Add period at the end
+  }
+  
